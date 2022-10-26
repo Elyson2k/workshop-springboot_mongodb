@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> find(@PathVariable String id){
-        User user = service.findByid(id);
+        User user = service.findByID(id);
         UserDTO newObj = new UserDTO(user);
         return ResponseEntity.ok().body(newObj);
     }
@@ -44,6 +44,12 @@ public class UserController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> insert(@PathVariable String id){
         service.deleteUserID(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> insert(@PathVariable String id, @RequestBody UserDTO userDTO){
+        service.update(id,userDTO);
         return ResponseEntity.noContent().build();
     }
 

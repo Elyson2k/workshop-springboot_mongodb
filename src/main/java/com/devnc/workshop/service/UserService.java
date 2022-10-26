@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findByid(String id){
+    public User findByID(String id){
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("Error: ID não constado no sistema."));
     }
@@ -34,10 +34,21 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public User update(String id, UserDTO user) {
+            User obj = findByID(id);
+            updateData(obj, user);
+            return userRepository.save(obj);
+    }
+
     // =================================================================================================================
 
     public User fromDTO(UserDTO objDto){
         return new User(objDto.getId(),objDto.getName(),objDto.getEmail());
+    }
+
+    private void updateData(User newObj, UserDTO obj) {
+        obj.setName(newObj.getName());
+        obj.setEmail(newObj.getEmail());
     }
 
 }
