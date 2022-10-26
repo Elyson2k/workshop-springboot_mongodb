@@ -1,5 +1,6 @@
 package com.devnc.workshop.config;
 
+import com.devnc.workshop.dto.AuthorDTO;
 import com.devnc.workshop.entities.Post;
 import com.devnc.workshop.entities.User;
 import com.devnc.workshop.repository.PostRepository;
@@ -23,7 +24,11 @@ public class Instantiation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
@@ -31,13 +36,9 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria,alex,bob));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu", "SP", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Partiu", "SP", new AuthorDTO(maria));
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu", "SP", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Partiu", "SP", maria);
-
-        userRepository.saveAll(Arrays.asList(maria,alex,bob));
         postRepository.saveAll(Arrays.asList(post1,post2));
 
     }
