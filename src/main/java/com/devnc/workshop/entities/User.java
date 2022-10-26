@@ -1,6 +1,7 @@
 package com.devnc.workshop.entities;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Document(collection = "user")
 public class User implements Serializable {
 
     private String id;
