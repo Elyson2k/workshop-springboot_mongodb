@@ -1,6 +1,7 @@
 package com.devnc.workshop.controller;
 
 import com.devnc.workshop.dto.UserDTO;
+import com.devnc.workshop.entities.Post;
 import com.devnc.workshop.entities.User;
 import com.devnc.workshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,12 @@ public class UserController {
     public ResponseEntity<Void> insert(@PathVariable String id, @RequestBody UserDTO userDTO){
         service.update(id,userDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User user = service.findByID(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
 
